@@ -1,2 +1,3 @@
 language: csharp
-solution: WPFSnake.sln
+solution: ./WPFSnake.sln
+mono: latest
