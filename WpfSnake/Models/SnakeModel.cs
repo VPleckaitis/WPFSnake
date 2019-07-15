@@ -15,7 +15,7 @@ namespace WpfSnake.Models
         {
             SnakeHead = startingCell;
             SnakeBody.Add(startingCell);
-            //Test - again for travis
+            //Test - again for travis 4
         }
     }
 }
