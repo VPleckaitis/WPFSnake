@@ -1,3 +1,4 @@
 language: csharp
 solution: ./WPFSnake.sln
+install: nuget restore ./WPFSnake.sln
 mono: latest
