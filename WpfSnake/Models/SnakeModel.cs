@@ -8,14 +8,40 @@ namespace WpfSnake.Models
 {
     class Snake
     {
-        private Cell SnakeHead;
+        private Cell _snakeHead;
         List<Cell> SnakeBody = new List<Cell>();
+
+        public Cell SnakeHead // just so we can access this from other classes
+        {
+            get { return _snakeHead; }
+            set { _snakeHead = value; }
+        }
 
         public Snake(Cell startingCell)
         {
-            SnakeHead = startingCell;
+            _snakeHead = startingCell;
             SnakeBody.Add(startingCell);
-            //Test - again for travis 4
+        }
+
+        public void Grow()
+        {
+            SnakeBody.Add(_snakeHead); // grow from head. At this point we have 2
+        }
+
+        public void Move(Cell next)
+        {
+            Cell tail = SnakeBody.Last();
+            SnakeBody.Remove(tail);
+            tail.CellType = Cell.CellTypeEnum.EMPTY;
+
+            _snakeHead = next;
+            SnakeBody.Insert(0, _snakeHead);
+        }
+
+        public bool SnakeHitTheCell(Cell next)
+        {
+            var isThereAHit = SnakeBody.Where(o => (o.Row == next.Row && o.Column == next.Column));
+            return isThereAHit.Count() > 0;
         }
     }
 }
