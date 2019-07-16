@@ -11,6 +11,17 @@ namespace WpfSnake.Models
         private int _column, _row;
         private CellTypeEnum _cellType;
 
+        public Cell(int row, int column)
+        {
+          new  Cell(row, column,CellTypeEnum.EMPTY);
+        }
+        public Cell(int row, int column, CellTypeEnum type)
+        {
+            row = _row;
+            _column = column;
+            _cellType = type;
+        }
+
         public int Column
         {
             get { return _column; }
@@ -33,6 +44,7 @@ namespace WpfSnake.Models
         {
             EMPTY,
             FOOD,
+            EATEN_FOOD,
             DIGESTED_FOOD,
             SNAKE
         }
