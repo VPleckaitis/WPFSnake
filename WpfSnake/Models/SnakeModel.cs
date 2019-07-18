@@ -25,7 +25,7 @@ namespace WpfSnake.Models
 
         public void Grow()
         {
-            SnakeBody.Insert(0,_snakeHead); // grow from head. At this point we have 2
+            SnakeBody.Insert(0, _snakeHead); // grow from head. At this point we have 2
         }
 
         public void Move(Cell next)
@@ -44,6 +44,6 @@ namespace WpfSnake.Models
             return isThereAHit.Count() > 0;
         }
 
-      
-        }
+
+    }
 }

@@ -24,6 +24,7 @@ namespace WpfSnake.Models
 
         public Cell AddFood()
         {
+            if (GetEmptyCellsCount() == 0) throw new Exception("0 empty cells left !");
             Cell cell = new Cell(-1,-1, Cell.CellTypeEnum.DIGESTED_FOOD); // just initialise cells for check
             while (cell.CellType != Cell.CellTypeEnum.EMPTY)
             {
