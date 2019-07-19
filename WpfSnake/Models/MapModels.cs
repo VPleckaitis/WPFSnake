@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace WpfSnake.Models
 {
-    class Map
+    public class Map
     {
         private int rows, columns;
         private Cell[,] _cells;
+        public Cell [,] Cells
+        {
+            get { return _cells; }
+            private set { _cells = value; }
+        }
         public Map(int rows, int columns)
         {
             _cells = new Cell[rows,columns];
@@ -22,6 +27,10 @@ namespace WpfSnake.Models
                 }
         }
 
+        public void UpdateCell(int row, int column, Cell.CellTypeEnum cellType)
+        {
+            _cells[row, column].CellType = cellType;
+        }
         public Cell AddFood()
         {
             if (GetEmptyCellsCount() == 0) throw new Exception("0 empty cells left !");
