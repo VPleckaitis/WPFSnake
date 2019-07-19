@@ -72,6 +72,26 @@ namespace WpfSnake.Models
             return map.Cells[row, column];
         }
 
+        public void Update()
+        {
+            if (direction != MovementDirection.None)
+            {
+                Cell next = GetNextCell(snake.SnakeHead);
+                if (!gameOver) // If we haven't hit border yet
+                    if (snake.SnakeHitTheCell(next)) GameOver = true;
+                    else
+                    {
+                        snake.Move(next);
+                        if (next.CellType == Cell.CellTypeEnum.FOOD)
+                        {
+                            snake.Grow();
+                            map.UpdateCell(next.Row, next.Column, Cell.CellTypeEnum.DIGESTED_FOOD);
+                            map.AddFood();
+                        }
+                    }
+            }
+        }
+
         void GameOverAction()
         {
 
