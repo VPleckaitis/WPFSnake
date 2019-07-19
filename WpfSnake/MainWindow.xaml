@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfSnake"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="WPFSnake" Height="768" Width="1366">
     <Grid>
-        
+        <Grid x:Name="grdOptions">
+            <Border BorderThickness="2" BorderBrush="Black">
+            <StackPanel Width="500" Height="300">
+                <Label Content="Please specify board size :" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" Margin="20,40,20,20">
+                    <TextBlock FontSize="30" Text="Width" Width="250"/>
+                        <StackPanel Width="230">
+                            <TextBox FontSize="30" Width="150" x:Name="tbWidth" Text="20"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="20,0,20,0">
+                        <TextBlock FontSize="30" Text="Height" Width="250"/>
+                        <StackPanel Width="230">
+                            <TextBox FontSize="30" Width="150" x:Name="tbHeight" Text="20"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="40">
+                        <Button Content="Ok" FontSize="30" FontWeight="SemiBold" Width="200" x:Name="btnConfirm" Click="BtnConfirm_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Viewbox Visibility="Collapsed">
+            <Canvas x:Name="theGameGrid" Visibility="Hidden"/>
+        </Viewbox>
     </Grid>
 </Window>

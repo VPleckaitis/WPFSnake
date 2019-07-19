@@ -24,5 +24,26 @@ namespace WpfSnake
         {
             InitializeComponent();
         }
+
+        private void BtnConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            bool success = true;
+            int rows = 10;
+            int columns = 10;
+            try { rows = Convert.ToInt32(tbHeight.Text); }
+            catch { success = false; }
+
+            try { columns = Convert.ToInt32(tbWidth.Text); }
+            catch { success = false; }
+
+            if (success)
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("Invalid number specified !","WPFSnake",MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }
