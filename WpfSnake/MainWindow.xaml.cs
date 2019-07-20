@@ -51,17 +51,48 @@ namespace WpfSnake
                 theGameGrid.Width = columns * 10;
 
                 theViewBox.Visibility = Visibility.Visible;
-                Rectangle rect = new Rectangle() { Width = 10, Height = 10 } ;
+                Rectangle rect = new Rectangle() { Width = 10, Height = 10 };
                 rect.Fill = new SolidColorBrush(System.Windows.Media.Colors.Green);
                 theGameGrid.Children.Add(rect);
                 Canvas.SetTop(rect, (rows / 2) * 10);
                 Canvas.SetLeft(rect, (columns / 2) * 10);
-              //  { Width=10,Height=10,Canvas.SetTop(this,(rows/2)*10), Canvas.SetLeft(this, (columns/2)*10)})
+                DrawFood(new Cell(1, 1));
+                DrawFood(new Cell(4, 4));
             }
             else
             {
-                MessageBox.Show("Invalid number specified !","WPFSnake",MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid number specified !", "WPFSnake", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        public void DrawFood(Cell cell)
+        {
+
+            BitmapImage bmi = null;
+            Random rnd = new Random();
+            switch(rnd.Next(3))
+            {
+                case 0:
+                    bmi = new BitmapImage(new Uri("pack://application:,,,/Images/food2.png"));
+                    break;
+                case 1:
+                    bmi = new BitmapImage(new Uri("pack://application:,,,/Images/food3.png"));
+                    break;
+                default:
+                    bmi = new BitmapImage(new Uri("pack://application:,,,/Images/food.png"));
+                    break;
+            }
+
+            Image img = new Image();
+            img.Width = 10;
+            img.Height = 10;
+            img.Source = bmi;
+
+            theGameGrid.Children.Add(img);
+            Canvas.SetTop(img, cell.Row * 10);
+            Canvas.SetLeft(img, cell.Column * 10);
+           
+        }
+
     }
 }

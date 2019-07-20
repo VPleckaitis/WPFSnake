@@ -17,7 +17,7 @@ namespace WpfSnake.Models
         }
         public Cell(int row, int column, CellTypeEnum type)
         {
-            row = _row;
+            _row = row;
             _column = column;
             _cellType = type;
         }
@@ -31,7 +31,7 @@ namespace WpfSnake.Models
         public int Row
         {
             get { return _row; }
-            set { _column = value; }
+            set { _row = value; }
         }
 
         public CellTypeEnum CellType
