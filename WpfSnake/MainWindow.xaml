@@ -29,8 +29,10 @@
                 </StackPanel>
             </Border>
         </Grid>
-        <Viewbox Visibility="Collapsed">
-            <Canvas x:Name="theGameGrid" Visibility="Hidden"/>
+        <Viewbox x:Name="theViewBox" Visibility="Visible">
+            <Border BorderThickness="5" BorderBrush="Black">
+                <Canvas x:Name="theGameGrid" Width="100" Height="100"/>
+            </Border>
         </Viewbox>
     </Grid>
 </Window>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfSnake.Models;
 
 namespace WpfSnake
 {
@@ -20,6 +21,9 @@ namespace WpfSnake
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Game theGame;
+        private Snake theSnake;
+        private Map theMap;
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +42,21 @@ namespace WpfSnake
 
             if (success)
             {
+                theMap = new Map(rows, columns);
+                theSnake = new Snake(new Cell((int)rows / 2, (int)columns / 2)); // We start at middle of map
+                theGame = new Game(theSnake, theMap);
 
+                grdOptions.Visibility = Visibility.Collapsed;
+                theGameGrid.Height = rows * 10;
+                theGameGrid.Width = columns * 10;
+
+                theViewBox.Visibility = Visibility.Visible;
+                Rectangle rect = new Rectangle() { Width = 10, Height = 10 } ;
+                rect.Fill = new SolidColorBrush(System.Windows.Media.Colors.Green);
+                theGameGrid.Children.Add(rect);
+                Canvas.SetTop(rect, (rows / 2) * 10);
+                Canvas.SetLeft(rect, (columns / 2) * 10);
+              //  { Width=10,Height=10,Canvas.SetTop(this,(rows/2)*10), Canvas.SetLeft(this, (columns/2)*10)})
             }
             else
             {
