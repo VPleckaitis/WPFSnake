@@ -51,12 +51,16 @@ namespace WpfSnake
                 theGameGrid.Width = columns * 10;
 
                 theViewBox.Visibility = Visibility.Visible;
+                // initial draw snake head
+                
                 Rectangle rect = new Rectangle() { Width = 10, Height = 10 };
                 rect.Fill = new SolidColorBrush(System.Windows.Media.Colors.Green);
                 theGameGrid.Children.Add(rect);
-                Canvas.SetTop(rect, (rows / 2) * 10);
+                Canvas.SetTop(rect, (rows / 2) * 10); 
                 Canvas.SetLeft(rect, (columns / 2) * 10);
-                DrawFood(new Cell(1, 1));
+
+                var tst = new Cell(1, 1);
+                DrawFood(tst);
                 DrawFood(new Cell(4, 4));
             }
             else
