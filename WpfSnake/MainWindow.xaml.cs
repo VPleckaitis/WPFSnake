@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Threading;
 using WpfSnake.Models;
 
 namespace WpfSnake
@@ -27,38 +26,9 @@ namespace WpfSnake
         private Map theMap;
         private bool isInMenu = true;
         private bool gameIsRunning = false;
-        private int score = 0;
-
-        DispatcherTimer timer;
-        private int timerInterval = 500;
         public MainWindow()
         {
             InitializeComponent();
-            timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 0, 0, timerInterval);
-            timer.Tick += Timer_Tick;
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            theGame.Update();
-            if (!theGame.GameOver)
-            {
-                if (theGame.MapHasChanged)
-                {
-                    score++;
-                    DigestFood();
-                    DrawFood(theGame.FoodCell);
-                    theGame.MapHasChanged = false;
-                }
-                DrawSnake();
-                timer.Interval = new TimeSpan(0, 0, 0, 0, timerInterval - score);
-            }
-            else
-            {
-                timer.Stop();
-                MessageBox.Show("Game over !");
-            }
         }
 
         private void BtnConfirm_Click(object sender, RoutedEventArgs e)
@@ -75,12 +45,8 @@ namespace WpfSnake
             if (success)
             {
                 theMap = new Map(rows, columns);
-                
-
                 theSnake = new Snake(new Cell((int)rows / 2, (int)columns / 2)); // We start at middle of map
                 theGame = new Game(theSnake, theMap);
-                theGame.mapRows = rows;
-                theGame.mapColumns = columns;
 
                 grdOptions.Visibility = Visibility.Collapsed; // hide options
 
@@ -90,10 +56,13 @@ namespace WpfSnake
                 theViewBox.Visibility = Visibility.Visible;
 
                 isInMenu = false; // Just so our clicks do smth
-                                 
+                // initial draw snake head
 
-                DrawSnake(); // initial draw snake head
-                DrawFood(theGame.FoodCell);
+                Rectangle rect = new Rectangle() { Width = 10, Height = 10 };
+                rect.Fill = new SolidColorBrush(System.Windows.Media.Colors.Green);
+                theGameGrid.Children.Add(rect);
+                Canvas.SetTop(rect, (rows / 2) * 10); 
+                Canvas.SetLeft(rect, (columns / 2) * 10);
 
             }
             else
@@ -149,38 +118,7 @@ namespace WpfSnake
 
         public void DrawSnake()
         {
-            List<Rectangle> toRemove = new List<Rectangle>();
-            foreach (var child in theGameGrid.Children)
-            {
-                if (child is Rectangle)
-                {
-                    toRemove.Add((Rectangle)child);
-                }
-            }
-            foreach(Rectangle rect in toRemove)
-                theGameGrid.Children.Remove(rect);
-
-
-            foreach (Cell cell in theSnake.SnakeBody)
-            {
-                Rectangle rect = new Rectangle() { Width = 10, Height = 10 };
-                if (cell.Column == theSnake.SnakeHead.Column && cell.Row == theSnake.SnakeHead.Row)
-                {
-                    rect.Fill = new SolidColorBrush(System.Windows.Media.Colors.Green);
-                }
-                else
-                {
-                    rect.Fill = new SolidColorBrush(System.Windows.Media.Colors.Yellow);
-
-                }
-                rect.Tag = "Snake";
-                theGameGrid.Children.Add(rect);
-                Canvas.SetTop(rect, cell.Row * 10);
-                Canvas.SetLeft(rect, cell.Column * 10);
-            }
-
-            this.UpdateLayout();
-
+            // 2DO
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -191,8 +129,6 @@ namespace WpfSnake
                 else if (e.Key == Key.Down) theGame.Direction = Game.MovementDirection.Down;
                 else if (e.Key == Key.Left) theGame.Direction = Game.MovementDirection.Left;
                 else if (e.Key == Key.Right) theGame.Direction = Game.MovementDirection.Right;
-                if(!gameIsRunning) { gameIsRunning = true; timer.Start(); }
-
             }
         }
     }
