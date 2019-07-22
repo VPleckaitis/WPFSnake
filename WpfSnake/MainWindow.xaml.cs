@@ -57,7 +57,7 @@ namespace WpfSnake
             else
             {
                 timer.Stop();
-                MessageBox.Show("Game over !");
+                MessageBox.Show("Game over !", "WPFSnake",MessageBoxButton.OK,MessageBoxImage.Exclamation);
             }
         }
 

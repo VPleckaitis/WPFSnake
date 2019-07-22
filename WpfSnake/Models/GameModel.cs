@@ -92,20 +92,24 @@ namespace WpfSnake.Models
         {
             if (direction != MovementDirection.None)
             {
-                Cell next = GetNextCell(snake.SnakeHead);
-                if (!gameOver) // If we haven't hit border yet
-                    if (snake.SnakeHitTheCell(next)) GameOver = true;
-                    else
-                    {
-                        snake.Move(next);
-                        if (next.CellType == Cell.CellTypeEnum.FOOD)
+                try
+                {
+                    Cell next = GetNextCell(snake.SnakeHead);
+                    if (!gameOver) // If we haven't hit border yet
+                        if (snake.SnakeHitTheCell(next)) GameOver = true;
+                        else
                         {
-                            snake.Grow();
-                            map.UpdateCell(next.Row, next.Column, Cell.CellTypeEnum.DIGESTED_FOOD);
-                            foodCell = map.AddFood();
-                            MapHasChanged = true; // we've ate / added food and so we need to redraw it
+                            snake.Move(next);
+                            if (next.CellType == Cell.CellTypeEnum.FOOD)
+                            {
+                                snake.Grow();
+                                map.UpdateCell(next.Row, next.Column, Cell.CellTypeEnum.DIGESTED_FOOD);
+                                foodCell = map.AddFood();
+                                MapHasChanged = true; // we've ate / added food and so we need to redraw it
+                            }
                         }
-                    }
+                }
+                catch { gameOver = true; }
             }
         }
 
