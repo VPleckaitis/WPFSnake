@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfSnake"
         mc:Ignorable="d"
-        Title="WPFSnake" Height="768" Width="1366">
+        Title="WPFSnake" Height="768" Width="1366" PreviewKeyDown="Window_PreviewKeyDown">
     <Grid>
         <Grid x:Name="grdOptions">
             <Border BorderThickness="2" BorderBrush="Black">

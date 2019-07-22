@@ -24,6 +24,8 @@ namespace WpfSnake
         private Game theGame;
         private Snake theSnake;
         private Map theMap;
+        private bool isInMenu = true;
+        private bool gameIsRunning = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -46,22 +48,22 @@ namespace WpfSnake
                 theSnake = new Snake(new Cell((int)rows / 2, (int)columns / 2)); // We start at middle of map
                 theGame = new Game(theSnake, theMap);
 
-                grdOptions.Visibility = Visibility.Collapsed;
-                theGameGrid.Height = rows * 10;
-                theGameGrid.Width = columns * 10;
+                grdOptions.Visibility = Visibility.Collapsed; // hide options
+
+                theGameGrid.Height = rows * 10; // set size of canvas. Each row is 10 px of size
+                theGameGrid.Width = columns * 10; // set size of canvas. Each column is 10 px of size
 
                 theViewBox.Visibility = Visibility.Visible;
+
+                isInMenu = false; // Just so our clicks do smth
                 // initial draw snake head
-                
+
                 Rectangle rect = new Rectangle() { Width = 10, Height = 10 };
                 rect.Fill = new SolidColorBrush(System.Windows.Media.Colors.Green);
                 theGameGrid.Children.Add(rect);
                 Canvas.SetTop(rect, (rows / 2) * 10); 
                 Canvas.SetLeft(rect, (columns / 2) * 10);
 
-                var tst = new Cell(1, 1);
-                DrawFood(tst);
-                DrawFood(new Cell(4, 4));
             }
             else
             {
@@ -92,11 +94,42 @@ namespace WpfSnake
             img.Height = 10;
             img.Source = bmi;
 
+            img.Tag = "Food"; // Just so we know what it is
+
             theGameGrid.Children.Add(img);
             Canvas.SetTop(img, cell.Row * 10);
             Canvas.SetLeft(img, cell.Column * 10);
-           
         }
 
+        public void DigestFood()
+        {
+            foreach (var child in theGameGrid.Children)
+            {
+                if (child is Image)
+                {
+                    if(((Image)child).Tag=="Food")
+                    {
+                        ((Image)child).Source = new BitmapImage(new Uri("pack://application:,,,/Images/digested_food.png"));
+                        ((Image)child).Tag = "DigestedFood";
+                    }
+                }
+            }
+        }
+
+        public void DrawSnake()
+        {
+            // 2DO
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!isInMenu)
+            {
+                if (e.Key == Key.Up) theGame.Direction = Game.MovementDirection.Up;
+                else if (e.Key == Key.Down) theGame.Direction = Game.MovementDirection.Down;
+                else if (e.Key == Key.Left) theGame.Direction = Game.MovementDirection.Left;
+                else if (e.Key == Key.Right) theGame.Direction = Game.MovementDirection.Right;
+            }
+        }
     }
 }

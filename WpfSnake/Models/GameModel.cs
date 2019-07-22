@@ -10,9 +10,11 @@ namespace WpfSnake.Models
     {
         private Snake snake;
         private Map map;
+
         public int mapRows=10, mapColumns=10;
 
         private bool gameOver = false;
+        private bool mapHasChanged = false; //just so we know we have to redraw it on canvas
         public bool GameOver
         {
             get { return gameOver; }
@@ -22,6 +24,12 @@ namespace WpfSnake.Models
                     GameOverAction();
                 }
             }
+        }
+
+        public bool MapHasChanged
+        {
+            get { return mapHasChanged; }
+            set { mapHasChanged = value; }
         }
 
         private MovementDirection direction = MovementDirection.None;
@@ -87,6 +95,7 @@ namespace WpfSnake.Models
                             snake.Grow();
                             map.UpdateCell(next.Row, next.Column, Cell.CellTypeEnum.DIGESTED_FOOD);
                             map.AddFood();
+                            MapHasChanged = true; // we've ate / added food and so we need to redraw it
                         }
                     }
             }
