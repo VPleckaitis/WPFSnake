@@ -41,24 +41,7 @@ namespace WpfSnake
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            theGame.Update();
-            if (!theGame.GameOver)
-            {
-                if (theGame.MapHasChanged)
-                {
-                    score++;
-                    DigestFood();
-                    DrawFood(theGame.FoodCell);
-                    theGame.MapHasChanged = false;
-                }
-                DrawSnake();
-                timer.Interval = new TimeSpan(0, 0, 0, 0, timerInterval - score);
-            }
-            else
-            {
-                timer.Stop();
-                MessageBox.Show("Game over !", "WPFSnake",MessageBoxButton.OK,MessageBoxImage.Exclamation);
-            }
+            GameUpdateAction();
         }
 
         private void BtnConfirm_Click(object sender, RoutedEventArgs e)
@@ -75,7 +58,7 @@ namespace WpfSnake
             if (success)
             {
                 theMap = new Map(rows, columns);
-                
+
 
                 theSnake = new Snake(new Cell((int)rows / 2, (int)columns / 2)); // We start at middle of map
                 theGame = new Game(theSnake, theMap);
@@ -90,7 +73,7 @@ namespace WpfSnake
                 theViewBox.Visibility = Visibility.Visible;
 
                 isInMenu = false; // Just so our clicks do smth
-                                 
+
 
                 DrawSnake(); // initial draw snake head
                 DrawFood(theGame.FoodCell);
@@ -107,7 +90,7 @@ namespace WpfSnake
 
             BitmapImage bmi = null;
             Random rnd = new Random();
-            switch(rnd.Next(3))
+            switch (rnd.Next(3))
             {
                 case 0:
                     bmi = new BitmapImage(new Uri("pack://application:,,,/Images/food2.png"));
@@ -138,7 +121,7 @@ namespace WpfSnake
             {
                 if (child is Image)
                 {
-                    if(((Image)child).Tag=="Food")
+                    if (((Image)child).Tag == "Food")
                     {
                         ((Image)child).Source = new BitmapImage(new Uri("pack://application:,,,/Images/digested_food.png"));
                         ((Image)child).Tag = "DigestedFood";
@@ -157,7 +140,7 @@ namespace WpfSnake
                     toRemove.Add((Rectangle)child);
                 }
             }
-            foreach(Rectangle rect in toRemove)
+            foreach (Rectangle rect in toRemove)
                 theGameGrid.Children.Remove(rect);
 
 
@@ -187,12 +170,36 @@ namespace WpfSnake
         {
             if (!isInMenu)
             {
-                if (e.Key == Key.Up) theGame.Direction = Game.MovementDirection.Up;
-                else if (e.Key == Key.Down) theGame.Direction = Game.MovementDirection.Down;
-                else if (e.Key == Key.Left) theGame.Direction = Game.MovementDirection.Left;
-                else if (e.Key == Key.Right) theGame.Direction = Game.MovementDirection.Right;
-                if(!gameIsRunning) { gameIsRunning = true; timer.Start(); }
+                bool arrow_pressed = false;
+                if (e.Key == Key.Up) { theGame.Direction = Game.MovementDirection.Up; arrow_pressed = true; }
+                else if (e.Key == Key.Down) { theGame.Direction = Game.MovementDirection.Down; arrow_pressed = true; }
+                else if (e.Key == Key.Left) { theGame.Direction = Game.MovementDirection.Left; arrow_pressed = true; }
+                else if (e.Key == Key.Right) { theGame.Direction = Game.MovementDirection.Right; arrow_pressed = true; }
+                if (!gameIsRunning) { gameIsRunning = true; timer.Start(); }
 
+                if (arrow_pressed) GameUpdateAction();
+            }
+        }
+
+        private void GameUpdateAction()
+        {
+            theGame.Update();
+            if (!theGame.GameOver)
+            {
+                if (theGame.MapHasChanged)
+                {
+                    score++;
+                    DigestFood();
+                    DrawFood(theGame.FoodCell);
+                    theGame.MapHasChanged = false;
+                }
+                DrawSnake();
+                timer.Interval = new TimeSpan(0, 0, 0, 0, timerInterval - score);
+            }
+            else
+            {
+                timer.Stop();
+                MessageBox.Show("Game over !", "WPFSnake", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
     }
