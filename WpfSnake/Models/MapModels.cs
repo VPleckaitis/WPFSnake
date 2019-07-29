@@ -29,7 +29,7 @@ namespace WpfSnake.Models
 
         public void UpdateCell(int row, int column, Cell.CellTypeEnum cellType)
         {
-            _cells[row, column].CellType = cellType;
+            _cells[row, column] = new Cell(row,column,cellType);
         }
         public Cell AddFood()
         {

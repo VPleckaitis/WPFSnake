@@ -96,7 +96,11 @@ namespace WpfSnake.Models
                 {
                     Cell next = GetNextCell(snake.SnakeHead);
                     if (!gameOver) // If we haven't hit border yet
-                        if (snake.SnakeHitTheCell(next)||map.Cells[next.Row,next.Column].CellType == Cell.CellTypeEnum.DIGESTED_FOOD) GameOver = true;
+                        if (snake.SnakeHitTheCell(next)) gameOver = true;
+                        else if (map.Cells[next.Row, next.Column].CellType == Cell.CellTypeEnum.DIGESTED_FOOD)
+                        {
+                            gameOver = true;
+                        }
                         else
                         {
                             snake.Move(next);
@@ -107,8 +111,8 @@ namespace WpfSnake.Models
                                 foodCell = map.AddFood();
                                 MapHasChanged = true; // we've ate / added food and so we need to redraw it
                             }
-                           
-                            
+
+
                         }
                 }
                 catch { gameOver = true; }
