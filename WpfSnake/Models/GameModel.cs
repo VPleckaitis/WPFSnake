@@ -59,7 +59,7 @@ namespace WpfSnake.Models
             this.snake = _snake;
             this.map = _map;
 
-            foodCell = map.AddFood();
+            foodCell = map.AddFood(snake);
         }
 
         private Cell GetNextCell(Cell currentCell)
@@ -108,7 +108,7 @@ namespace WpfSnake.Models
                             {
                                 snake.Grow();
                                 map.UpdateCell(next.Row, next.Column, Cell.CellTypeEnum.DIGESTED_FOOD);
-                                foodCell = map.AddFood();
+                                foodCell = map.AddFood(snake);
                                 MapHasChanged = true; // we've ate / added food and so we need to redraw it
                             }
 

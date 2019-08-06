@@ -31,16 +31,22 @@ namespace WpfSnake.Models
         {
             _cells[row, column] = new Cell(row,column,cellType);
         }
-        public Cell AddFood()
+        public Cell AddFood(Snake snake)
         {
-            if (GetEmptyCellsCount() == 0) throw new Exception("0 empty cells left !");
+            int emptyCellCount = GetEmptyCellsCount();
+            if (emptyCellCount == 0) throw new Exception("0 empty cells left !");
+            else if (emptyCellCount <= snake.SnakeBody.Count()) throw new Exception("All remaining spaces are used by snake !");
+
             Cell cell = new Cell(-1,-1, Cell.CellTypeEnum.DIGESTED_FOOD); // just initialise cells for check
+
             while (cell.CellType != Cell.CellTypeEnum.EMPTY)
             {
-                Random rnd = new Random();
+                Random rnd = new Random(); // will need replace it eventually since it is way too inefficient if snake is quite big
                 int _row = rnd.Next(rows);
                 int _col = rnd.Next(columns);
                 cell = _cells[_row, _col];
+
+                if (snake.SnakeBody.Where(o => (o.Column == _col) && (o.Row == _row)).ToList().Count() > 0) cell.CellType = Cell.CellTypeEnum.SNAKE;
             }
 
             cell.CellType = Cell.CellTypeEnum.FOOD;

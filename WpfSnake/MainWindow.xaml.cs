@@ -91,7 +91,7 @@ namespace WpfSnake
                 theViewBox.Visibility = Visibility.Visible;
 
                 isInMenu = false; // Just so our clicks do smth
-
+                tbTheScore.Visibility = Visibility.Visible;
 
                 DrawSnake(); // initial draw snake head
                 DrawFood(theGame.FoodCell);

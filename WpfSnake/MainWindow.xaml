@@ -34,7 +34,7 @@
                 <Canvas x:Name="theGameGrid" Width="100" Height="100"/>
             </Border>
         </Viewbox>
-        <StackPanel x:Name="tbTheScore" Orientation="Horizontal">
+        <StackPanel x:Name="tbTheScore" Orientation="Horizontal" Visibility="Collapsed">
             <TextBlock Text="Score : " FontSize="32"/>
             <TextBlock x:Name="tbScore" Text="{Binding ElementName=_this, Path=Score, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontSize="32"/>
         </StackPanel>
