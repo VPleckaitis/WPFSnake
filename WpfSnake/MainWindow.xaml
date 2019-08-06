@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfSnake"
         mc:Ignorable="d"
-        Title="WPFSnake" Height="768" Width="1366" PreviewKeyDown="Window_PreviewKeyDown">
+        Title="WPFSnake" Height="768" Width="1366" PreviewKeyDown="Window_PreviewKeyDown" x:Name="_this">
     <Grid>
         <Grid x:Name="grdOptions">
             <Border BorderThickness="2" BorderBrush="Black">
@@ -34,5 +34,9 @@
                 <Canvas x:Name="theGameGrid" Width="100" Height="100"/>
             </Border>
         </Viewbox>
+        <StackPanel x:Name="tbTheScore" Orientation="Horizontal">
+            <TextBlock Text="Score : " FontSize="32"/>
+            <TextBlock x:Name="tbScore" Text="{Binding ElementName=_this, Path=Score, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontSize="32"/>
+        </StackPanel>
     </Grid>
 </Window>

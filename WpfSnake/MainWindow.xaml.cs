@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,24 @@ namespace WpfSnake
         private Map theMap;
         private bool isInMenu = true;
         private bool gameIsRunning = false;
-        private int score = 0;
+
+        public static int score = 0;
+        public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged;
+        private static void NotifyStaticPropertyChanged(string propertyName)
+        {
+            if (StaticPropertyChanged != null)
+                StaticPropertyChanged(null, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public static int Score
+        {
+            get { return score; }
+            set
+            {
+                score = value; NotifyStaticPropertyChanged("Score");
+                //  tbScore.Text = ScoreValue;
+            }
+        }
 
         DispatcherTimer timer;
         private int timerInterval = 500;
@@ -188,7 +206,7 @@ namespace WpfSnake
             {
                 if (theGame.MapHasChanged)
                 {
-                    score++;
+                    Score++;
                     DigestFood();
                     DrawFood(theGame.FoodCell);
                     theGame.MapHasChanged = false;
