@@ -83,7 +83,10 @@ namespace WpfSnake.Models
                     break;
                 default: break;
             }
-            if (row >= mapRows || row < 0 || column >= mapColumns || column < 0) GameOver = true;
+            if (row >= mapRows || row < 0 || column >= mapColumns || column < 0)
+            {
+                GameOver = true;
+            }
 
             return map.Cells[row, column];
         }
@@ -95,11 +98,12 @@ namespace WpfSnake.Models
                 try
                 {
                     Cell next = GetNextCell(snake.SnakeHead);
-                    if (!gameOver) // If we haven't hit border yet
-                        if (snake.SnakeHitTheCell(next)) gameOver = true;
+                    if (!GameOver) // If we haven't hit border yet
+                    {
+                        if (snake.SnakeHitTheCell(next)) GameOver = true;
                         else if (map.Cells[next.Row, next.Column].CellType == Cell.CellTypeEnum.DIGESTED_FOOD)
                         {
-                            gameOver = true;
+                            GameOver = true;
                         }
                         else
                         {
@@ -111,16 +115,18 @@ namespace WpfSnake.Models
                                 foodCell = map.AddFood(snake);
                                 MapHasChanged = true; // we've ate / added food and so we need to redraw it
                             }
-
-
                         }
+                    }
                 }
-                catch { gameOver = true; }
+                catch { GameOver = true; }
             }
         }
 
        
 
+        /// <summary>
+        /// Do something 
+        /// </summary>
         void GameOverAction()
         {
 

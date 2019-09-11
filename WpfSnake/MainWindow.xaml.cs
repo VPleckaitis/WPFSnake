@@ -29,7 +29,7 @@ namespace WpfSnake
         private bool isInMenu = true;
         private bool gameIsRunning = false;
 
-        public static int score = 0;
+        private static int score = 0;
         public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged;
         private static void NotifyStaticPropertyChanged(string propertyName)
         {
@@ -43,7 +43,6 @@ namespace WpfSnake
             set
             {
                 score = value; NotifyStaticPropertyChanged("Score");
-                //  tbScore.Text = ScoreValue;
             }
         }
 
@@ -65,13 +64,12 @@ namespace WpfSnake
         private void BtnConfirm_Click(object sender, RoutedEventArgs e)
         {
             bool success = true;
-            int rows = 10;
-            int columns = 10;
+            int rows, columns; // initialise rows and columns
             try { rows = Convert.ToInt32(tbHeight.Text); }
-            catch { success = false; }
+            catch { success = false; rows = -1; }
 
             try { columns = Convert.ToInt32(tbWidth.Text); }
-            catch { success = false; }
+            catch { success = false; columns = -1; }
 
             if (success)
             {
@@ -159,7 +157,9 @@ namespace WpfSnake
                 }
             }
             foreach (Rectangle rect in toRemove)
+            {
                 theGameGrid.Children.Remove(rect);
+            }
 
 
             foreach (Cell cell in theSnake.SnakeBody)
@@ -195,7 +195,10 @@ namespace WpfSnake
                 else if (e.Key == Key.Right) { theGame.Direction = Game.MovementDirection.Right; arrow_pressed = true; }
                 if (!gameIsRunning) { gameIsRunning = true; timer.Start(); }
 
-                if (arrow_pressed) GameUpdateAction();
+                if (arrow_pressed)
+                {
+                    GameUpdateAction();
+                }
             }
         }
 

@@ -8,7 +8,7 @@ namespace WpfSnake.Models
 {
     public class Cell
     {
-        private int _column=0, _row=0;
+        private int _column, _row;
         private CellTypeEnum _cellType;
 
         public Cell(int row, int column) : base()
