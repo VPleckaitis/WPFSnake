@@ -34,7 +34,9 @@ namespace WpfSnake
         private static void NotifyStaticPropertyChanged(string propertyName)
         {
             if (StaticPropertyChanged != null)
+            {
                 StaticPropertyChanged(null, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         public static int Score
@@ -76,7 +78,7 @@ namespace WpfSnake
                 theMap = new Map(rows, columns);
 
 
-                theSnake = new Snake(new Cell((int)rows / 2, (int)columns / 2)); // We start at middle of map
+                theSnake = new Snake(new Cell(rows / 2, columns / 2)); // We start at middle of map
                 theGame = new Game(theSnake, theMap);
                 theGame.mapRows = rows;
                 theGame.mapColumns = columns;

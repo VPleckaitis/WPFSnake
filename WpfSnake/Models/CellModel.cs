@@ -11,7 +11,7 @@ namespace WpfSnake.Models
         private int _column, _row;
         private CellTypeEnum _cellType;
 
-        public Cell(int row, int column) : base()
+        public Cell(int row, int column)
         {
             Row = row;
             Column = column;

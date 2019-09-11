@@ -100,7 +100,10 @@ namespace WpfSnake.Models
                     Cell next = GetNextCell(snake.SnakeHead);
                     if (!GameOver) // If we haven't hit border yet
                     {
-                        if (snake.SnakeHitTheCell(next)) GameOver = true;
+                        if (snake.SnakeHitTheCell(next))
+                        {
+                            GameOver = true;
+                        }
                         else if (map.Cells[next.Row, next.Column].CellType == Cell.CellTypeEnum.DIGESTED_FOOD)
                         {
                             GameOver = true;
@@ -125,11 +128,11 @@ namespace WpfSnake.Models
        
 
         /// <summary>
-        /// Do something 
+        /// Do something once game is over
         /// </summary>
         void GameOverAction()
         {
-
+            // 2do
         }
     }
 }
